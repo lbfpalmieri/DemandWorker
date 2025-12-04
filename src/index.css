@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --glass: rgba(20, 24, 32, 0.75);
+}
+
+html, body, #root { height: 100%; }
+
+.app-bg {
+  background:
+    radial-gradient(1000px circle at 8% 12%, rgba(76,201,240,0.10), transparent 40%),
+    radial-gradient(800px circle at 85% 18%, rgba(76,201,240,0.06), transparent 55%),
+    linear-gradient(135deg, #0b0e11 0%, #12161d 45%, #171a21 100%);
+  animation: bgPulse 12s ease-in-out infinite alternate;
+}
+
+@keyframes bgPulse {
+  0% { filter: saturate(1) brightness(1); }
+  100% { filter: saturate(1.3) brightness(1.05); }
+}
+
+.neon-border {
+  position: relative;
+}
+.neon-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 16px;
+  padding: 2px;
+  background: linear-gradient(135deg, rgba(76,201,240,0.55), rgba(0,234,255,0.35));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+
+.glass-panel {
+  @apply bg-glass backdrop-blur-lg shadow-soft border border-white/10 rounded-3xl;
+}
+
+.button-neon {
+  @apply relative inline-flex items-center gap-2 px-4 py-2 rounded-2xl text-white font-semibold transition-all;
+  background: linear-gradient(135deg, rgba(76,201,240,0.30), rgba(0,234,255,0.22));
+  border: 1px solid rgba(255,255,255,0.12);
+  animation: floaty 6s ease-in-out infinite, glowPulse 4s ease-in-out infinite alternate;
+  will-change: transform, box-shadow, filter;
+}
+.button-neon:hover { box-shadow: 0 0 20px rgba(76,201,240,0.45); transform: translateY(-1px) scale(1.02); }
+
+.checkbox-neon {
+  @apply w-5 h-5 rounded-md border border-white/20 bg-[#0b1326] shadow-glow cursor-pointer;
+  transition: transform 0.2s ease;
+}
+.checkbox-neon:hover { transform: translateY(-1px); }
+.checkbox-neon-checked { box-shadow: 0 0 20px rgba(0,255,157,0.45); border-color: rgba(0,255,157,0.6); }
+
+.scroll-smooth { scroll-behavior: smooth; }
+
+.modal-surface {
+  @apply backdrop-blur-xl shadow-soft border border-white/10 rounded-3xl;
+  background: rgba(18, 22, 28, 0.94);
+}
+
+@property --angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.neon-flow::before {
+  background: conic-gradient(from var(--angle), rgba(0,234,255,0.75), rgba(181,23,158,0.75), rgba(0,234,255,0.75));
+  animation: spinBorder 5s linear infinite;
+  filter: drop-shadow(0 0 12px rgba(76,201,240,0.5));
+}
+
+@keyframes spinBorder { to { --angle: 360deg; } }
+
+.card-surface {
+  @apply backdrop-blur-lg border border-white/10 rounded-3xl;
+  background: rgba(18, 22, 28, 0.88);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform, box-shadow;
+}
+.card-surface:hover { transform: translateY(-1px); box-shadow: 0 10px 48px rgba(0,0,0,0.55); }
+.neon-flow::before {
+  background: conic-gradient(from var(--angle), var(--neon-c1, rgba(76,201,240,0.75)), var(--neon-c2, rgba(0,234,255,0.55)), var(--neon-c1, rgba(76,201,240,0.75)));
+  animation: spinBorder var(--neon-speed, 5s) linear infinite;
+  filter: drop-shadow(0 0 12px rgba(76,201,240,0.5));
+}
+
+.panel-flow::before {
+  background: conic-gradient(from var(--angle), var(--neon-c1, rgba(76,201,240,0.25)), var(--neon-c2, rgba(0,234,255,0.18)), var(--neon-c1, rgba(76,201,240,0.25)));
+  animation: spinBorder var(--neon-speed, 12s) linear infinite;
+}
+
+.badge-pulse { animation: glowPulse 3s ease-in-out infinite; }
+
+.neon-strong {
+  text-shadow: 0 0 4px currentColor, 0 0 10px currentColor;
+}
+
+.neon-title {
+  text-shadow: 0 0 6px currentColor, 0 0 16px currentColor;
+  filter: drop-shadow(0 0 6px rgba(76,201,240,0.35));
+}
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+@keyframes glowPulse {
+  0% { filter: saturate(1) brightness(1); }
+  100% { filter: saturate(1.08) brightness(1.04); }
+}
+
+/* Priority backgrounds */
+.priority-bg-baixa { background: linear-gradient(135deg, rgba(76,201,240,0.16), rgba(76,201,240,0.06)); }
+.priority-bg-media { background: linear-gradient(135deg, rgba(255,200,0,0.18), rgba(255,200,0,0.07)); }
+.priority-bg-alta { background: linear-gradient(135deg, rgba(255,61,113,0.20), rgba(255,61,113,0.08)); }
+.priority-bg-concluida { background: linear-gradient(135deg, rgba(0,255,157,0.20), rgba(0,255,157,0.08)); }
