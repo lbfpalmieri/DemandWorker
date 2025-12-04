@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useMemo, useReducer } from 'react'
 import type { Demand, Week, Status } from '@types'
-import { fetchDemands, fetchWeeks, fetchCurrentWeek, replaceDemands, replaceWeeks, saveCurrentWeekDB, setCurrentWeekAndCarry, resetDatabase, getKV, setKV } from '../db/sqlite'
+import { fetchDemands, fetchWeeks, fetchCurrentWeek, replaceDemands, replaceWeeks, saveCurrentWeekDB, setCurrentWeekAndCarry, getKV, setKV } from '../db/sqlite'
 import { loadClients, saveClients } from '@utils/storage'
 import { weekKey as wk, startOfWeek, endOfWeek } from '@utils/date'
 
@@ -153,13 +153,6 @@ export const DemandProvider: React.FC<React.PropsWithChildren> = ({ children }) 
 
   React.useEffect(() => {
     (async () => {
-      try {
-        if (localStorage.getItem('dw_reset_done') !== 'true') {
-          localStorage.clear()
-          await resetDatabase()
-          localStorage.setItem('dw_reset_done', 'true')
-        }
-      } catch {}
       const filterKV = await getKV('dw_filterCliente')
       const settingsKV = await getKV('dw_settings')
       const filterCliente = filterKV ? JSON.parse(filterKV) : null
